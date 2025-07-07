@@ -5,6 +5,9 @@ namespace App\Forms\Book;
 use App\Model;
 use App\Models\Book;
 
+/**
+ * Форма валидации для модели Book
+ */
 class BookForm extends Model
 {
     public ?int $id = null;
@@ -17,23 +20,18 @@ class BookForm extends Model
     public ?string $date_updated = null;
     public array $author_ids = [];
 
-    public function __construct(?Book $book = null, array $config = [])
+    /**
+     * @param Book|null $author
+     * @param array $config
+     */
+    public function __construct(?Book $author = null, array $config = [])
     {
-        parent::__construct($book);
+        parent::__construct($author);
 
-        if ($book) {
-            $this->setAttributes($book->getAttributes());
+        if ($author) {
+            $this->setAttributes($author->getAttributes(), false);
 
-            $this->author_ids = array_column($book->authors, 'id');
-
-//            $this->title = $book->title;
-//            $this->year = $book->year;
-//            $this->description = $book->description;
-//            $this->isbn = $book->isbn;
-//            $this->photo_path = $book->photo_path;
-//            $this->date_created = $book->date_created;
-//            $this->date_updated = $book->date_updated;
-//            $this->author_ids = array_column($book->authors, 'id');
+            $this->author_ids = array_column($author->authors, 'id');
         }
     }
 

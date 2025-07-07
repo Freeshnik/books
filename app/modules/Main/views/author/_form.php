@@ -1,11 +1,12 @@
 <?php
 
+use App\Forms\Author\AuthorForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var App\Models\Author $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var AuthorForm $model */
+/** @var ActiveForm $form */
 ?>
 
 <div class="author-form">

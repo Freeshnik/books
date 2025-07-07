@@ -24,7 +24,7 @@ class MainController extends Controller
                             'actions' => ['create', 'update', 'delete'],
                             'roles' => ['?'], // Guest users
                             'denyCallback' => function () {
-                                throw App::i()->getResponse()->set403('Нет доступа');
+                                return App::i()->getResponse()->set403('Нет доступа');
                             },
                         ],
                         [

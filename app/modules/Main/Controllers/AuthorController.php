@@ -2,18 +2,35 @@
 
 namespace Main\Controllers;
 
+use App\App;
 use App\Controller\MainController;
+use App\Forms\Author\AuthorForm;
 use App\Models\Author;
 use App\Models\AuthorSearch;
+use App\Models\Book;
 use App\Models\User;
+use App\Repositories\Author\AuthorRepo;
+use DomainException;
 use Yii;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * AuthorController implements the CRUD actions for Author model.
  */
 class AuthorController extends MainController
 {
+    public function __construct(
+        $id,
+        $module,
+        private readonly AuthorRepo $authorRepo,
+        array $config = [],
+    ) {
+        parent::__construct($id, $module, $config);
+    }
+
     /**
      * Lists all Author models.
      *
@@ -34,8 +51,6 @@ class AuthorController extends MainController
     }
 
     /**
-     * Displays a single Author model.
-     *
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -44,8 +59,13 @@ class AuthorController extends MainController
     {
         $canManage = !Yii::$app->user->isGuest && Yii::$app->user->identity->type === User::TYPE_USER;
 
+        $author = $this->authorRepo->findOneByConditions(Author::class, ['id' => $id]);
+        if (!$author) {
+            throw new NotFoundHttpException('Author not found.');
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $author,
             'canManage' => $canManage,
         ]);
     }
@@ -54,22 +74,22 @@ class AuthorController extends MainController
      * Creates a new Author model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      *
-     * @return string|\yii\web\Response
+     * @return Response|string
+     * @throws Exception
      */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
-        $model = new Author();
+        $authorForm = new AuthorForm();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->getIspost() && $authorForm->load($this->request->post()) && $authorForm->validate()) {
+            $authorId = $this->authorRepo->create($authorForm);
+            if ($authorId) {
+                return $this->redirect(['view', 'id' => $authorId]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $authorForm,
         ]);
     }
 
@@ -77,52 +97,48 @@ class AuthorController extends MainController
      * Updates an existing Author model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param int $id
+     * @return Response|string
+     * @throws Exception
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): Response|string
     {
-        $model = $this->findModel($id);
+        /** @var Author $author */
+        $author = $this->authorRepo->findOneByConditions(Author::class, ['id' => $id]);
+        if (!$author) {
+            throw new NotFoundHttpException('Author not found.');
+        }
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $form = new AuthorForm($author);
+
+        if ($this->request->getIspost() && $form->load($this->request->post(), 'AuthorForm') && $form->validate()) {
+            $author->setAttributes($form->getAttributes(), false);
+            /** @var Author $author */
+            $author = $this->authorRepo->update($author);
+
+            return $this->redirect(['view', 'id' => $author->id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
     /**
-     * Deletes an existing Author model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException
+     * @param int $id
+     * @return Response
+     * @throws StaleObjectException
+     * @throws \Throwable
      */
-    public function actionDelete(int $id)
+    public function actionDelete(int $id): Response
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Author model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param int $id ID
-     * @return Author the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel(int $id): Author
-    {
-        if (($model = Author::findOne(['id' => $id])) !== null) {
-            return $model;
+        try {
+            $this->authorRepo->delete(Author::class, $id);
+        } catch (DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return $this->redirect(['index']);
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
+use App\Forms\Book\BookForm;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var App\Models\Book $model */
+/** @var BookForm $model */
 /** @var array $allAuthors */
 
 $this->title = 'Обновить книгу: ' . $model->title;

@@ -5,7 +5,9 @@ namespace Main\Controllers\Actions\Book;
 use App\Base\WebAction;
 use App\Models\Book;
 use App\Repositories\Book\BookRepo;
+use DomainException;
 use Main\Controllers\BookController;
+use Yii;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -30,7 +32,11 @@ class BookDelete extends WebAction
      */
     public function run(int $id): Response
     {
-        $this->bookRepo->delete(Book::class, $id);
+        try {
+            $this->bookRepo->delete(Book::class, $id);
+        } catch (DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
+        }
 
         return $this->redirect(['index']);
     }

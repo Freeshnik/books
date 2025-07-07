@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Author;
 
+use App\Forms\Author\AuthorForm;
 use App\Models\Author;
 use App\Models\Book;
 use App\Repositories\Repository;
+use RuntimeException;
 
 class AuthorRepo extends Repository
 {
@@ -41,5 +43,21 @@ class AuthorRepo extends Repository
     public function getAllYears(): array
     {
         return Book::find()->select('year')->orderBy(['year' => SORT_ASC])->distinct()->column();
+    }
+
+    /**
+     * @param AuthorForm $form
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function create(AuthorForm $form): int
+    {
+        $author = new Author($form->getAttributes());
+
+        if (!$author->save(false)) {
+            throw new RuntimeException('Error while saving author.');
+        }
+
+        return $author->id;
     }
 }

@@ -36,34 +36,6 @@ class Author extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function rules(): array
-    {
-        return [
-            [['description', 'date_updated'], 'default', 'value' => null],
-            [['fio'], 'required'],
-            [['description'], 'string'],
-            [['date_created', 'date_updated'], 'safe'],
-            [['fio'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels(): array
-    {
-        return [
-            'id' => 'ID',
-            'fio' => 'ФИО',
-            'description' => 'Описание',
-            'date_created' => 'Date Created',
-            'date_updated' => 'Date Updated',
-        ];
-    }
-
-    /**
      * Gets query for [[Books]].
      *
      * @return ActiveQuery

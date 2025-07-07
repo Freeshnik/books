@@ -12,7 +12,10 @@ use yii\web\Controller;
  */
 class AuthController extends Controller
 {
-    public function actionLogin()
+    /**
+     * @return \yii\web\Response|string
+     */
+    public function actionLogin(): \yii\web\Response|string
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -30,7 +33,11 @@ class AuthController extends Controller
         ]);
     }
 
-    public function actionSignup()
+    /**
+     * @return \yii\web\Response|string
+     * @throws \yii\db\Exception
+     */
+    public function actionSignup(): \yii\web\Response|string
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
@@ -43,7 +50,10 @@ class AuthController extends Controller
         ]);
     }
 
-    public function actionLogout()
+    /**
+     * @return \yii\web\Response
+     */
+    public function actionLogout(): \yii\web\Response
     {
         Yii::$app->user->logout();
 

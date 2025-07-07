@@ -1,11 +1,12 @@
 <?php
 
+use App\Forms\Book\BookForm;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var App\Models\Book $model */
+/** @var BookForm $model */
 /** @var yii\widgets\ActiveForm $form */
 /** @var array $allAuthors */
 ?>

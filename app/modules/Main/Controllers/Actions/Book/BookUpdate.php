@@ -40,7 +40,9 @@ class BookUpdate extends WebAction
 
         $form = new BookForm($book);
 
-        if ($this->getRequest()->isPost && $form->load($this->getRequest()->post()) && $form->validate()) {
+        if ($this->getRequest()->isPost && $form->load($this->getRequest()->post(), 'BookForm') && $form->validate()) {
+            $book->setAttributes($form->getAttributes(), false);
+            /** @var Book $author */
             $book = $this->bookRepo->update($book);
 
             return $this->redirect(['view', 'id' => $book->id]);

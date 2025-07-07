@@ -13,6 +13,7 @@ class Timestamp extends TimestampBehavior
      * @var string
      */
     public $createdAtAttribute = 'date_created';
+
     /**
      * Название поля с датой апдейта
      *
