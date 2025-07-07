@@ -55,7 +55,7 @@ services:
         uid: ${USER_UID}
         tz: ${TIMEZONE}
         php_server_name: ${PHP_SERVER_NANE}
-      context: ../infotech_test/docker/config/php
+      context: ../books/docker/config/php
       dockerfile: Dockerfile
     links:
       - yii2-percona
@@ -63,7 +63,7 @@ services:
     ports:
       - '${PHP_PORT}:9000'
     volumes:
-      - './:/var/www/html/infotech_test'
+      - './:/var/www/html/books'
 #      - './docker/config/php/php.ini:/usr/local/etc/php/php.ini'
 #      - './docker/config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf'
     environment:
@@ -80,14 +80,14 @@ services:
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 
-  infotech_test-nginx:
+  books-nginx:
     image: nginx:alpine
-    container_name: infotech_test-nginx
+    container_name: books-nginx
     ports:
       - "${NGINX_PORT}:80"
       - "8080:8080"
     volumes:
-      - .:/var/www/html/infotech_test
+      - .:/var/www/html/books
       - ./docker/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./docker/config/nginx/api.conf:/etc/nginx/conf.d/api.conf
 #      - ./docker/config/nginx/nginx.conf:/etc/nginx/nginx.conf

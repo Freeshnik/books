@@ -42,23 +42,6 @@ class Book extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels(): array
-    {
-        return [
-            'id' => 'ID',
-            'title' => 'Название',
-            'year' => 'Год выпуска',
-            'description' => 'Описание',
-            'isbn' => 'ISBN',
-            'photo_path' => 'Путь к фото обложки',
-            'date_created' => 'Date Created',
-            'date_updated' => 'Date Updated',
-        ];
-    }
-
-    /**
      * Gets query for [[Author]].
      *
      * @return ActiveQuery

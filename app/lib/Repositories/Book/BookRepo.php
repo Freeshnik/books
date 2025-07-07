@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Book;
 
+use App\Forms\Book\BookForm;
 use App\Models\Book;
 use App\Repositories\Repository;
 use RuntimeException;
@@ -10,16 +11,18 @@ use yii\db\Exception;
 class BookRepo extends Repository
 {
     /**
-     * @param Book $model
+     * @param BookForm $form
      * @return int - ID новой книги
      * @throws Exception
      */
-    public function create(Book $model): int
+    public function create(BookForm $form): int
     {
-        if ($model->save(false)) {
-            throw new RuntimeException('Saving error.');
+        $book = new Book($form->getAttributes());
+
+        if (!$book->save(false)) {
+            throw new RuntimeException('Error while saving book.');
         }
 
-        return $model->id;
+        return $book->id;
     }
 }

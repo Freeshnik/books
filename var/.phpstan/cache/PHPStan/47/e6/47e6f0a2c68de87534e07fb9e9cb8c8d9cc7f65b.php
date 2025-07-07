@@ -615,14 +615,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/modules/Main/Controllers/Actions/Book/BookDelete.php' => 
     array (
-      0 => '9fa9213b0af98c940b978d56f3aea539e1c38a2c',
+      0 => '216a769f49d57a85fcc3d113758b0f67fd0e2864',
       1 => 
       array (
         0 => 'main\\controllers\\actions\\book\\bookdelete',
       ),
       2 => 
       array (
-        0 => 'main\\controllers\\actions\\book\\run',
+        0 => 'main\\controllers\\actions\\book\\__construct',
+        1 => 'main\\controllers\\actions\\book\\run',
       ),
       3 => 
       array (
@@ -630,14 +631,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/modules/Main/Controllers/Actions/Book/BookCreate.php' => 
     array (
-      0 => '6e9072546ec95fe126d7d65010dd45f592b0b5a8',
+      0 => '0c240df824d46c2df6f794999b7b99de439ca54b',
       1 => 
       array (
         0 => 'main\\controllers\\actions\\book\\bookcreate',
       ),
       2 => 
       array (
-        0 => 'main\\controllers\\actions\\book\\run',
+        0 => 'main\\controllers\\actions\\book\\__construct',
+        1 => 'main\\controllers\\actions\\book\\run',
       ),
       3 => 
       array (
@@ -645,14 +647,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/modules/Main/Controllers/Actions/Book/BookView.php' => 
     array (
-      0 => '532fddca3f394ef834b4e291478bfb9df2752659',
+      0 => '9ef11e3a06276a1ff5585bc378e302b5943e3cec',
       1 => 
       array (
         0 => 'main\\controllers\\actions\\book\\bookview',
       ),
       2 => 
       array (
-        0 => 'main\\controllers\\actions\\book\\run',
+        0 => 'main\\controllers\\actions\\book\\__construct',
+        1 => 'main\\controllers\\actions\\book\\run',
       ),
       3 => 
       array (
@@ -660,14 +663,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/modules/Main/Controllers/Actions/Book/BookUpdate.php' => 
     array (
-      0 => '17f130acbb406435a25561de597b4672190f013c',
+      0 => 'e2cdaf27ed8ef63cbc95eda9ff1e386360bba6d8',
       1 => 
       array (
         0 => 'main\\controllers\\actions\\book\\bookupdate',
       ),
       2 => 
       array (
-        0 => 'main\\controllers\\actions\\book\\run',
+        0 => 'main\\controllers\\actions\\book\\__construct',
+        1 => 'main\\controllers\\actions\\book\\run',
       ),
       3 => 
       array (
@@ -1088,7 +1092,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/lib/Models/Book.php' => 
     array (
-      0 => 'ce9951dad387fa6fecc9bfca45a50d6cb78a179a',
+      0 => 'fab08a95aa6acdc83d7692f691e536c6c2618920',
       1 => 
       array (
         0 => 'app\\models\\book',
@@ -1097,10 +1101,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
         0 => 'app\\models\\tablename',
         1 => 'app\\models\\behaviors',
-        2 => 'app\\models\\attributelabels',
-        3 => 'app\\models\\getauthors',
-        4 => 'app\\models\\afterfind',
-        5 => 'app\\models\\aftersave',
+        2 => 'app\\models\\getauthors',
+        3 => 'app\\models\\afterfind',
+        4 => 'app\\models\\aftersave',
       ),
       3 => 
       array (
@@ -1201,7 +1204,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/lib/Forms/User/LoginForm.php' => 
     array (
-      0 => 'f9a8886bb50cd47caee5fe7a8e2ed6ee0cf5f11d',
+      0 => '487575495c50bd0c2513eb52d1760a309468f1af',
       1 => 
       array (
         0 => 'app\\forms\\user\\loginform',
@@ -1480,7 +1483,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/lib/Repositories/Repository.php' => 
     array (
-      0 => '8c8d1cdd207e662703a130f49fa867c9c7c98529',
+      0 => 'f667d4d88f244646211213b64de61619b3ce778c',
       1 => 
       array (
         0 => 'app\\repositories\\repository',
@@ -1490,6 +1493,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         0 => 'app\\repositories\\save',
         1 => 'app\\repositories\\delete',
         2 => 'app\\repositories\\findonebyconditions',
+        3 => 'app\\repositories\\update',
       ),
       3 => 
       array (
@@ -1513,7 +1517,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/lib/Repositories/RepositoryInterface.php' => 
     array (
-      0 => '98707da285b2f8173561ee5d74b5f349d7b19e83',
+      0 => 'f3165425b4c23eedf9e941dbc330c91011389543',
       1 => 
       array (
         0 => 'app\\repositories\\repositoryinterface',
@@ -1623,7 +1627,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/lib/Forms/Book/BookForm.php' => 
     array (
-      0 => 'd18802421708c6e9afe6457248cf1ae29d774719',
+      0 => '1accdf77fea49a4479c237e236ba4397aa2aafe1',
       1 => 
       array (
         0 => 'app\\forms\\book\\bookform',
@@ -1632,6 +1636,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
         0 => 'app\\forms\\book\\__construct',
         1 => 'app\\forms\\book\\rules',
+        2 => 'app\\forms\\book\\attributelabels',
       ),
       3 => 
       array (
@@ -1639,7 +1644,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     '/home/leviostas/web/books/app/lib/Repositories/Book/BookRepo.php' => 
     array (
-      0 => 'e74208d47305b2eca1ef1a6ba7cabadf1a232d5a',
+      0 => '2a0e3d24709110123c328b52369e98e68d51fc53',
       1 => 
       array (
         0 => 'app\\repositories\\book\\bookrepo',

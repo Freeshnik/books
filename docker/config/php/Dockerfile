@@ -44,10 +44,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 #ENV PHP_IDE_CONFIG 'serverName='$php_server_name
 
 # Set working directory
-WORKDIR /var/www/html/infotech_test
+WORKDIR /var/www/html/books
 
 # Copy existing application directory contents
-COPY . /var/www/html/infotech_test
+COPY . /var/www/html/books
 
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html

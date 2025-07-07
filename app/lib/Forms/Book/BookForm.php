@@ -7,18 +7,19 @@ use App\Models\Book;
 
 class BookForm extends Model
 {
-    public string $title;
-    public int $year;
+    public ?int $id = null;
+    public ?string $title = null;
+    public ?int $year = null;
     public ?string $description = null;
-    public string $isbn;
+    public ?string $isbn = null;
     public ?string $photo_path = null;
     public ?string $date_created = null;
-    public ?string $date_updated;
-    public array $author_ids;
+    public ?string $date_updated = null;
+    public array $author_ids = [];
 
     public function __construct(?Book $book = null, array $config = [])
     {
-        parent::__construct($config);
+        parent::__construct($book);
 
         if ($book) {
             $this->setAttributes($book->getAttributes());
@@ -36,6 +37,9 @@ class BookForm extends Model
         }
     }
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -46,6 +50,23 @@ class BookForm extends Model
             [['date_created', 'date_updated'], 'safe'],
             [['title', 'isbn', 'photo_path'], 'string', 'max' => 255],
             ['author_ids', 'each', 'rule' => ['integer']],
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => 'ID',
+            'title' => 'Название',
+            'year' => 'Год выпуска',
+            'description' => 'Описание',
+            'isbn' => 'ISBN',
+            'photo_path' => 'Путь к фото обложки',
+            'date_created' => 'Date Created',
+            'date_updated' => 'Date Updated',
         ];
     }
 }
