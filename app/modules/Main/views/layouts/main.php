@@ -35,36 +35,36 @@ MainAsset::register($this);
         ],
     ]);
 
-    $menuItems = [
-        ['label' => 'Авторы', 'url' => ['/author']],
-        ['label' => 'Книги', 'url' => ['/book']],
-        ['label' => 'Отчет', 'url' => ['/report']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Вход', 'url' => ['/auth/login']];
-        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/auth/signup']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/auth/logout'], 'post')
-            . Html::submitButton(
-                'Выход (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
+$menuItems = [
+    ['label' => 'Авторы', 'url' => ['/author']],
+    ['label' => 'Книги', 'url' => ['/book']],
+    ['label' => 'Отчет', 'url' => ['/report']],
+];
+if (Yii::$app->user->isGuest) {
+    $menuItems[] = ['label' => 'Вход', 'url' => ['/auth/login']];
+    $menuItems[] = ['label' => 'Регистрация', 'url' => ['/auth/signup']];
+} else {
+    $menuItems[] = '<li>'
+        . Html::beginForm(['/auth/logout'], 'post')
+        . Html::submitButton(
+            'Выход (' . Yii::$app->user->identity->username . ')',
+            ['class' => 'btn btn-link logout']
+        )
+        . Html::endForm()
+        . '</li>';
+}
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav navbar-right'],
+    'items' => $menuItems,
+]);
 
-    NavBar::end();
-    ?>
+NavBar::end();
+?>
 
     <div class="container">
         <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    ]) ?>
         <?= $content ?>
     </div>
 </div>

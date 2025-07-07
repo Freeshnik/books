@@ -2,7 +2,9 @@
 
 namespace Main\Controllers;
 
+use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 class SwaggerUiController extends Controller
 {
@@ -13,7 +15,7 @@ class SwaggerUiController extends Controller
 
     public function actionJson()
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
         $jsonPath = \Yii::getAlias('@Web/docs/swagger.json');
         if (file_exists($jsonPath)) {

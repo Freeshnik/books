@@ -30,6 +30,17 @@
 
 Система уведомлений создана при помощи фабрики.
 
+Коменды:
+PHP CS Fixer: 
+~~~
+docker exec -it yii2-php ./vendor/bin/php-cs-fixer fix app
+~~~
+
+PHPStan:
+~~~
+docker exec -it yii2-php vendor/bin/phpstan analyse app
+~~~
+
 -------------------
 TODO
 -------------------

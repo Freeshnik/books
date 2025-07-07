@@ -20,10 +20,10 @@ class SwaggerController extends Controller
             Yii::getAlias('@App/Controller'),
             Yii::getAlias('@Api/Controllers'),
         ]);
-//        $openapi = Generator::scan([
-//            \Yii::getAlias('@App/Controller'), // или @frontend/controllers
-//            \Yii::getAlias('@Api/Controllers'), // если используете модели
-//        ]);
+        //        $openapi = Generator::scan([
+        //            \Yii::getAlias('@App/Controller'), // или @frontend/controllers
+        //            \Yii::getAlias('@Api/Controllers'), // если используете модели
+        //        ]);
 
         // Путь для сохранения JSON файла
         $jsonPath = \Yii::getAlias('@Web/docs/swagger.json');

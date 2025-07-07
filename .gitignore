@@ -17,5 +17,5 @@ tests/_output/
 /docker/data/redis
 /docker/data/nginx/logs/
 
-var/.phpstorm/*
+/var
 .php-cs-fixer.cache

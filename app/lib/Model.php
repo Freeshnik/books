@@ -12,12 +12,12 @@ class Model extends \yii\base\Model
     /**
      * @param null|ActiveRecord $activeRecord
      */
-    public function __construct(?ActiveRecord $activeRecord = null)
+    public function __construct(?ActiveRecord $activeRecord = null, array $config = [])
     {
         if ($activeRecord) {
             $this->entity = $activeRecord;
             $this->isNewRecord = $this->entity->isNewRecord;
         }
-        parent::__construct();
+        parent::__construct($config);
     }
 }

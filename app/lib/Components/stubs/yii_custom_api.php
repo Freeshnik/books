@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 use App\Models\User;

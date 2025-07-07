@@ -15,11 +15,11 @@ use yii\queue\RetryableJobInterface;
 
 /**
  * Job-класс для отправки СМС-уведомления о новом книге автора.
+ *
  * @CLI docker exec -it yii2-php php yii queue - статус
  *
  * @CLI docker exec -it yii2-php php yii queue/run - одиночный запуск
  * @CLI docker exec -it yii2-php php yii queue/listen - запуск в режиме прослушивания
- *
  */
 class NewBookSmsNotifyJob extends BaseObject implements JobInterface, RetryableJobInterface
 {
@@ -85,7 +85,6 @@ class NewBookSmsNotifyJob extends BaseObject implements JobInterface, RetryableJ
                 'phone' => $user->phone,
                 'book_id' => $this->book_id,
             ], 'sms_book_notification');
-
         } catch (GuzzleException $e) {
             Yii::error([
                 'error' => $e->getMessage(),
@@ -115,8 +114,8 @@ class NewBookSmsNotifyJob extends BaseObject implements JobInterface, RetryableJ
      */
     public function buildQuery(Book $book, User $user): array
     {
-        $message = 'Вышла новая книга "' . $book->title . '" от автора(ов): ' .
-            implode(', ', array_column($book->authors, 'fio'));
+        $message = 'Вышла новая книга "' . $book->title . '" от автора(ов): '
+            . implode(', ', array_column($book->authors, 'fio'));
 
         return [
             'send' => $message,

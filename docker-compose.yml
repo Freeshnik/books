@@ -64,7 +64,7 @@ services:
       - '${PHP_PORT}:9000'
     volumes:
       - './:/var/www/html/books'
-#      - './docker/config/php/php.ini:/usr/local/etc/php/php.ini'
+      - './docker/config/php/php.ini:/usr/local/etc/php/php.ini'
 #      - './docker/config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf'
     environment:
       PHP_DB_CHARSET: ${PHP_DB_CHARSET}

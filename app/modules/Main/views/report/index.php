@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ? 'btn btn-primary'
                 : 'btn btn-outline-secondary';
 
-              $url = Url::toRoute(['', 'year' => $year]);
+            $url = Url::toRoute(['', 'year' => $year]);
             ?>
 
             <?= Html::a($year, $url, ['class' => $buttonClass]) ?>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 if ($action === 'view') {
                     return Url::to(['author/view', 'id' => $model['author_id']]);
                 }
-                    return '';
+                return '';
             },
         ],
     ],

@@ -1,4 +1,5 @@
 <?php
+
 Yii::setAlias('@App', dirname(__DIR__) . '/lib');
 Yii::setAlias('@Main', dirname(__DIR__) . '/modules/Main');
 Yii::setAlias('@Admin', dirname(__DIR__) . '/modules/Admin');

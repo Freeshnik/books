@@ -22,7 +22,7 @@ class AuthorForm extends Model
      */
     public function __construct(?Author $author = null, array $config = [])
     {
-        parent::__construct($author);
+        parent::__construct($author, $config);
 
         if ($author) {
             $this->setAttributes($author->getAttributes(), false);

@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endif; ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);?>
 
     <?= GridView::widget([
     'dataProvider' => $dataProvider,
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'label' => 'Авторы',
             'format' => 'raw',
             'value' => static function ($model) {
-                    /** @var Book $model */
+                /** @var Book $model */
                 if ($model->authors) {
                     $result = [];
                     foreach ($model->authors as $author) {
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return implode(', ', $result);
                 }
 
-                    return '';
+                return '';
             },
         ],
         'description:ntext',
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                 }
 
-                    return '';
+                return '';
             },
         ],
         'date_created',
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'class' => ActionColumn::class,
             'urlCreator' => static function ($action, Book $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
+                return Url::toRoute([$action, 'id' => $model->id]);
             },
             'visibleButtons' => [
                 'update' => $canManage,

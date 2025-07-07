@@ -6,10 +6,14 @@ use App\Jobs\Book\NewBookSmsNotifyJob;
 use App\Notify\Factories\NotificationFactory;
 use App\Notify\Interface\NotificationInterface;
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\queue\Queue;
 
 class SmsNotification implements NotificationInterface
 {
-
+    /**
+     * @throws InvalidConfigException
+     */
     public function send(string $recipient, array $options = []): bool
     {
         $job = new NewBookSmsNotifyJob([
@@ -17,7 +21,10 @@ class SmsNotification implements NotificationInterface
             'book_id' => $options['book_id'],
         ]);
 
-        return (bool) Yii::$app->queue->push($job);
+        /** @var Queue $queue */
+        $queue = Yii::$app->get('queue');
+
+        return (bool) $queue->push($job);
     }
 
     public function validateRecipient(string $recipient): bool

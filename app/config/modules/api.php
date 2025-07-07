@@ -4,7 +4,6 @@ use App\Models\User;
 use yii\web\JsonParser;
 use yii\web\Response;
 
-
 return [
     'id'                  => 'api',
     'controllerNamespace' => 'Api\Controllers',

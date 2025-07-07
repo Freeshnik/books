@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'label' => 'Subscription Status',
             'format' => 'raw',
             'value' => static function ($model) {
-                    /** @var Author $model */
+                /** @var Author $model */
                 if ($model->isSubscribedByCurrentUser) {
                     return '<span class="label label-success pb-lg-5">You are subscribed</span>'
                         . '<p>' . Html::a(
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     );
                 }
 
-                    return 'Только для авторизированных пользователей';
+                return 'Только для авторизированных пользователей';
             },
             'contentOptions' => ['style' => 'text-align: center; vertical-align: middle;'],
             'filter' => false,
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'class' => ActionColumn::class,
             'urlCreator' => static function ($action, Author $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
+                return Url::toRoute([$action, 'id' => $model->id]);
             },
             'visibleButtons' => [
                 'update' => $canManage,

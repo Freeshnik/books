@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\ActiveRecord;
+use App\Models\Author;
+use App\Models\Book;
 use DomainException;
 use RuntimeException;
 use yii\db\Exception;
@@ -49,7 +51,7 @@ abstract class Repository implements RepositoryInterface
 
     /**
      * @param ActiveRecord $model
-     * @return ActiveRecord
+     * @return ActiveRecord|Book|Author
      * @throws Exception
      */
     public function update(ActiveRecord $model): ActiveRecord

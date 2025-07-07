@@ -26,7 +26,7 @@ class BookForm extends Model
      */
     public function __construct(?Book $author = null, array $config = [])
     {
-        parent::__construct($author);
+        parent::__construct($author, $config);
 
         if ($author) {
             $this->setAttributes($author->getAttributes(), false);
