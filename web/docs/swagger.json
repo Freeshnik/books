@@ -1,0 +1,263 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API",
+        "description": "Документация API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api",
+            "description": "Development server"
+        }
+    ],
+    "paths": {
+        "/author": {
+            "get": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Список авторов",
+                "operationId": "1de8f8c2036cbd98f0146363376e5a63",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Author"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/book": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Список книг",
+                "operationId": "1ce76a29d5860d9e6ac9b8dbae93f934",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Book"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/report": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Отчет по 10 самым публикуемым авторам за год",
+                "description": "Возвращает список 10 авторов, которые опубликовали больше всего книг за указанный год.",
+                "operationId": "41843a037a539f7aec5378db91259eb8",
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "description": "Год для фильтрации отчета. Если не указан, по умолчанию используется 2010.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 2010
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с данными отчета",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TopAuthorsReport"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Author": {
+                "title": "Author",
+                "description": "Модель автора",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "fio": {
+                        "description": "ФИО автора",
+                        "type": "string",
+                        "example": "Николай Дмитриевич Новиков"
+                    },
+                    "description": {
+                        "description": "Описание/биография",
+                        "type": "string",
+                        "example": "Dolorum molestiae laudantium atque eos eius iure rerum dolorem iusto sit eum sed minus magnam."
+                    },
+                    "date_created": {
+                        "description": "Дата создания записи",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2016-07-26 05:56:44"
+                    },
+                    "date_updated": {
+                        "description": "Дата обновления записи",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Book": {
+                "title": "Book",
+                "description": "Book model",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "Название книги",
+                        "type": "string",
+                        "example": "Vel assumenda eum"
+                    },
+                    "year": {
+                        "description": "Год издания",
+                        "type": "integer",
+                        "example": 2014
+                    },
+                    "description": {
+                        "description": "Описание книги",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "isbn": {
+                        "description": "ISBN",
+                        "type": "string",
+                        "example": "9783264097399"
+                    },
+                    "photo_path": {
+                        "description": "Путь к обложке книги",
+                        "type": "string",
+                        "example": "/img/book_image.jpg"
+                    },
+                    "date_created": {
+                        "description": "Дата создания записи",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2022-10-23 07:51:37"
+                    },
+                    "date_updated": {
+                        "description": "Дата обновления записи",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ReportItem": {
+                "title": "Report Item",
+                "description": "Данные по автору в годовом отчете",
+                "properties": {
+                    "book_count": {
+                        "description": "Количество книг автора за год",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "year": {
+                        "description": "Год",
+                        "type": "integer",
+                        "example": 2010
+                    },
+                    "author_id": {
+                        "description": "ID автора",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "fio": {
+                        "description": "ФИО автора",
+                        "type": "string",
+                        "example": "Абрам Владимирович Казаков"
+                    }
+                },
+                "type": "object"
+            },
+            "TopAuthorsReport": {
+                "title": "Top Authors Report",
+                "description": "Отчет по самым публикуемым авторам за год",
+                "properties": {
+                    "selected_year": {
+                        "description": "Выбранный год для отчета",
+                        "type": "integer",
+                        "example": 2010
+                    },
+                    "all_years": {
+                        "description": "Список всех доступных лет для отчета",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "example": [
+                            2010,
+                            2011,
+                            2012,
+                            2013,
+                            2014,
+                            2015
+                        ]
+                    },
+                    "items": {
+                        "description": "Топ 10 авторов за выбранный год",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReportItem"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authors",
+            "description": "Authors"
+        },
+        {
+            "name": "Books",
+            "description": "Books"
+        },
+        {
+            "name": "Reports",
+            "description": "Reports"
+        }
+    ]
+}

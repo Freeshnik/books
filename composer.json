@@ -1,0 +1,76 @@
+{
+  "name": "faustvik/sketeton_yii2",
+  "description": "skeleton project yii2",
+  "type": "project",
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=8.2",
+    "ext-redis": "*",
+    "bower-asset/bootstrap-datepicker": "^1.6",
+    "bower-asset/chosen": "^1.8",
+    "bower-asset/eonasdan-bootstrap-datetimepicker": "*",
+    "bower-asset/fontawesome": "^4.6",
+    "bower-asset/moment": "*",
+    "bower-asset/select2": "v4.0.4",
+    "dmstr/yii2-adminlte-asset": "2.*",
+    "geoip2/geoip2": "^2.3",
+    "guzzlehttp/guzzle": "^7.9",
+    "kartik-v/yii2-widget-select2": "*",
+    "yiisoft/yii2": "^2.0.51",
+    "yiisoft/yii2-bootstrap": "~2.0.11",
+    "yiisoft/yii2-queue": "^2.3",
+    "yiisoft/yii2-redis": "^2.0",
+    "yiisoft/yii2-swiftmailer": "^2.1",
+    "zircote/swagger-php": "^5.1"
+  },
+  "require-dev": {
+    "codeception/codeception": "5.*",
+    "codeception/module-asserts": "^3.0 || ^1.1",
+    "codeception/module-filesystem": "^3.0 || ^2.0 || ^1.1",
+    "codeception/module-yii2": "^1.1",
+    "codeception/verify": "^3.0 || ^2.2",
+    "friendsofphp/php-cs-fixer": "^3.75",
+    "opsway/psr12-strict-coding-standard": "^1.0",
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "~9.6.10.0",
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "*",
+    "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
+    "webimpress/coding-standard": "^1.2",
+    "yiisoft/yii2-debug": "*",
+    "yiisoft/yii2-faker": "*",
+    "yiisoft/yii2-gii": "*"
+  },
+  "scripts": {
+    "cs-check": "./vendor/bin/phpcs app/",
+    "cs-fix": "./vendor/bin/phpcbf app/",
+    "phpstan-check": "./vendor/bin/phpstan analyse"
+  },
+  "config": {
+    "sort-packages": true,
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": false
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "composer/package-versions-deprecated": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Console\\": "app/modules/Console/",
+      "Api\\": "app/modules/Api/",
+      "Main\\": "app/modules/Main/",
+      "App\\": "app/lib/",
+      "tests\\": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.22.0.0/16
+
+services:
+  yii2-redis:
+    image: redis:8.0.2
+    container_name: yii2-redis
+    ports:
+      - "${PHP_REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+#      - ./docker/config/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server #/usr/local/etc/redis/redis.conf
+    networks:
+      app-network:
+        #ipv4_address: 172.22.0.2
+
+  yii2-percona:
+    image: percona/percona-server:8.4.5
+    container_name: yii2-percona
+    environment:
+      MYSQL_DATABASE: ${PHP_PERCONA_DB_NAME}
+      MYSQL_USER: ${PHP_PERCONA_DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${PHP_PERCONA_DB_PASSWORD}
+    volumes:
+      - percona_data:/var/lib/mysql/
+      - ./docker/config/percona/conf.d:/etc/mysql/conf.d
+      - ./docker/config/percona/initdb:/docker-entrypoint-initdb.d
+    command:
+      - "--mysql-native-password=ON"
+    ports:
+      - "${PHP_PERCONA_DB_PORT}:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u${PHP_PERCONA_DB_USERNAME} -p${PHP_PERCONA_DB_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      app-network:
+        ipv4_address: 172.22.0.3
+
+  yii2-php:
+    container_name: yii2-php
+    user: "${USER_UID}:${USER_UID}"
+    env_file:
+      - .env
+    build:
+      args:
+        user: ${USER_MACHINE}
+        uid: ${USER_UID}
+        tz: ${TIMEZONE}
+        php_server_name: ${PHP_SERVER_NANE}
+      context: ../infotech_test/docker/config/php
+      dockerfile: Dockerfile
+    links:
+      - yii2-percona
+      - yii2-redis
+    ports:
+      - '${PHP_PORT}:9000'
+    volumes:
+      - './:/var/www/html/infotech_test'
+#      - './docker/config/php/php.ini:/usr/local/etc/php/php.ini'
+#      - './docker/config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf'
+    environment:
+      PHP_DB_CHARSET: ${PHP_DB_CHARSET}
+      PHP_percona_DB_HOST: ${PHP_PERCONA_DB_HOST}
+      PHP_percona_DB_NAME: ${PHP_PERCONA_DB_NAME}
+      PHP_percona_DB_USERNAME: ${PHP_PERCONA_DB_USERNAME}
+      PHP_percona_DB_PASSWORD: ${PHP_PERCONA_DB_PASSWORD}
+      PHP_REDIS_HOST: ${PHP_REDIS_HOST}
+      PHP_REDIS_PORT: ${PHP_REDIS_PORT}
+    networks:
+      app-network:
+        ipv4_address: 172.22.0.4
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  infotech_test-nginx:
+    image: nginx:alpine
+    container_name: infotech_test-nginx
+    ports:
+      - "${NGINX_PORT}:80"
+      - "8080:8080"
+    volumes:
+      - .:/var/www/html/infotech_test
+      - ./docker/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/config/nginx/api.conf:/etc/nginx/conf.d/api.conf
+#      - ./docker/config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/data/nginx/logs:/var/log/nginx/
+    networks:
+      app-network:
+        ipv4_address: 172.22.0.6
+    depends_on:
+      - yii2-php
+
+volumes:
+  percona_data:
+  redis_data:

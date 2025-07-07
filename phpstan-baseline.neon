@@ -1,0 +1,4 @@
+parameters:
+    dynamicConstantNames:
+            - YII_DEBUG
+            - YII_ENV

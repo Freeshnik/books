@@ -1,0 +1,20 @@
+.idea
+/vendor
+app/config/config_local.php
+.env
+
+app/modules/console/runtime
+# PHP Code style cache
+.phpcs-cache
+php-cs-fixer.cache
+
+runtime/
+
+tests/_support/_generated/
+tests/_output/
+
+/docker/data/mysql
+/docker/data/redis
+/docker/data/nginx/logs/
+
+.php-cs-fixer.cache

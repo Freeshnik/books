@@ -1,0 +1,17 @@
+includes:
+    - phpstan-baseline.neon
+parameters:
+    phpVersion: 80200
+    treatPhpDocTypesAsCertain: false
+    scanFiles:
+        - web/index.php
+        - web/api.php
+    bootstrapFiles:
+        - app/config/phpstan.php
+    parallel:
+        processTimeout: 3600.0
+        maximumNumberOfProcesses: 1
+    level: 4
+    paths:
+        - app
+    tmpDir: var/.phpstan
