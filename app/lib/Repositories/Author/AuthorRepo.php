@@ -13,6 +13,25 @@ class AuthorRepo extends Repository
     /** @var int Количество авторов в топе */
     private const TOP_COUNT = 10;
 
+    /**
+     * @return string
+     */
+    protected function getModelClass(): string
+    {
+        return Author::class;
+    }
+
+    /**
+     * @param array $conditions
+     * @return array
+     */
+    public function findByConditions(array $conditions): array
+    {
+        return Author::find()
+            ->where($conditions)
+            ->all();
+    }
+
     /** Возвращает топ-10 авторов, выпустивших наибольшее количество книг в указанном году
      *
      * @param int $year

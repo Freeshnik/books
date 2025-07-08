@@ -32,7 +32,7 @@ class BookView extends WebAction
     {
         $canManage = !Yii::$app->user->isGuest && Yii::$app->user->identity->type === User::TYPE_USER;
 
-        $book = $this->bookRepo->findOneByConditions(Book::class, ['id' => $id]);
+        $book = $this->bookRepo->findById($id);
         if (!$book) {
             throw new NotFoundHttpException('Book not found.');
         }

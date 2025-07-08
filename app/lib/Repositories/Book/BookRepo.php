@@ -10,6 +10,26 @@ use yii\db\Exception;
 
 class BookRepo extends Repository
 {
+    /** Класс модели
+     *
+     * @return string
+     */
+    protected function getModelClass(): string
+    {
+        return Book::class;
+    }
+
+    /**
+     * @param array $conditions
+     * @return array
+     */
+    public function findByConditions(array $conditions): array
+    {
+        return Book::find()
+            ->where($conditions)
+            ->all();
+    }
+
     /**
      * @param BookForm $form
      * @return int - ID новой книги

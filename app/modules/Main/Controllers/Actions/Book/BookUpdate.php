@@ -23,8 +23,7 @@ class BookUpdate extends WebAction
         parent::__construct($id, $controller, $config);
     }
 
-    /** Выводит страницу книги
-     *
+    /**
      * @param int $id
      * @return Response|string
      * @throws Exception
@@ -33,7 +32,7 @@ class BookUpdate extends WebAction
     public function run(int $id): Response|string
     {
         /** @var Book $book */
-        $book = $this->bookRepo->findOneByConditions(Book::class, ['id' => $id]);
+        $book = $this->bookRepo->findById($id);
         if (!$book) {
             throw new NotFoundHttpException('Book not found.');
         }
@@ -43,7 +42,7 @@ class BookUpdate extends WebAction
         if ($this->getRequest()->isPost && $form->load($this->getRequest()->post(), 'BookForm') && $form->validate()) {
             $book->setAttributes($form->getAttributes(), false);
             /** @var Book $author */
-            $book = $this->bookRepo->update($book);
+            $book = $this->bookRepo->save($book);
 
             return $this->redirect(['view', 'id' => $book->id]);
         }

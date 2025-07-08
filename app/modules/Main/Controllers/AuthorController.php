@@ -59,7 +59,7 @@ class AuthorController extends MainController
     {
         $canManage = !Yii::$app->user->isGuest && Yii::$app->user->identity->type === User::TYPE_USER;
 
-        $author = $this->authorRepo->findOneByConditions(Author::class, ['id' => $id]);
+        $author = $this->authorRepo->findById($id);
         if (!$author) {
             throw new NotFoundHttpException('Author not found.');
         }
@@ -105,7 +105,7 @@ class AuthorController extends MainController
     public function actionUpdate(int $id): Response|string
     {
         /** @var Author $author */
-        $author = $this->authorRepo->findOneByConditions(Author::class, ['id' => $id]);
+        $author = $this->authorRepo->findById($id);
         if (!$author) {
             throw new NotFoundHttpException('Author not found.');
         }
@@ -115,7 +115,7 @@ class AuthorController extends MainController
         if ($this->request->getIspost() && $form->load($this->request->post(), 'AuthorForm') && $form->validate()) {
             $author->setAttributes($form->getAttributes(), false);
             /** @var Author $author */
-            $author = $this->authorRepo->update($author);
+            $author = $this->authorRepo->save($author);
 
             return $this->redirect(['view', 'id' => $author->id]);
         }
@@ -128,13 +128,19 @@ class AuthorController extends MainController
     /**
      * @param int $id
      * @return Response
+     * @throws NotFoundHttpException
      * @throws StaleObjectException
      * @throws \Throwable
      */
     public function actionDelete(int $id): Response
     {
+        $author = $this->authorRepo->findById($id);
+        if (!$author) {
+            throw new NotFoundHttpException('Author not found.');
+        }
+
         try {
-            $this->authorRepo->delete(Author::class, $id);
+            $this->authorRepo->delete($author);
         } catch (DomainException $e) {
             Yii::$app->errorHandler->logException($e);
         }

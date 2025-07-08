@@ -5,61 +5,52 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\ActiveRecord;
-use App\Models\Author;
-use App\Models\Book;
-use DomainException;
 use RuntimeException;
 use yii\db\Exception;
-use yii\db\StaleObjectException;
 
 abstract class Repository implements RepositoryInterface
 {
-    /**
-     * @throws Exception
+    /** Класс модели
+     * @return string
      */
-    public function save(ActiveRecord $activeRecord, bool $runValidation = true, ?array $attributeNames = null): bool
-    {
-        return $activeRecord->save(runValidation: $runValidation, attributeNames: $attributeNames);
-    }
+    abstract protected function getModelClass(): string;
 
     /**
-     * @param string $className
      * @param int $id
-     * @return bool|int
-     * @throws StaleObjectException
-     * @throws \Throwable
-     */
-    public function delete(string $className, int $id): bool|int
-    {
-        $model = $this->findOneByConditions($className, ['id' => $id]);
-        if (!$model) {
-            throw new DomainException('Model of class ' . $className . ' not found.');
-        }
-
-        return $model->delete();
-    }
-
-    /**
-     * @param string $activeRecordClass
-     * @param array $conditions
      * @return ActiveRecord|null
      */
-    public function findOneByConditions(string $activeRecordClass, array $conditions): ?ActiveRecord
+    public function findById(int $id): ?ActiveRecord
     {
-        return $activeRecordClass::findOne($conditions);
+        $modelClass = $this->getModelClass();
+        return $modelClass::findOne($id);
     }
 
     /**
      * @param ActiveRecord $model
-     * @return ActiveRecord|Book|Author
+     * @return ActiveRecord
      * @throws Exception
      */
-    public function update(ActiveRecord $model): ActiveRecord
+    public function save(ActiveRecord $model): ActiveRecord
     {
         if (!$model->save(false)) {
-            throw new RuntimeException('Error while saving model.');
+            throw new \RuntimeException('Error while saving model with class ' . get_class($model));
         }
 
         return $model;
+    }
+
+    /**
+     * @param ActiveRecord $model
+     * @return bool
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function delete(ActiveRecord $model): bool
+    {
+        if (!$model->delete()) {
+            throw new RuntimeException('Error while deleting model with class ' . get_class($model));
+        }
+
+        return true;
     }
 }

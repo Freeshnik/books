@@ -32,8 +32,13 @@ class BookDelete extends WebAction
      */
     public function run(int $id): Response
     {
+        $book = $this->bookRepo->findById($id);
+        if (!$book) {
+            throw new NotFoundHttpException('Book not found.');
+        }
+
         try {
-            $this->bookRepo->delete(Book::class, $id);
+            $this->bookRepo->delete($book);
         } catch (DomainException $e) {
             Yii::$app->errorHandler->logException($e);
         }
