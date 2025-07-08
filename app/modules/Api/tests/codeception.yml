@@ -1,0 +1,41 @@
+namespace: Tests
+support_namespace: Support
+# suite config
+suites:
+    acceptance:
+        actor: AcceptanceTester
+        path: .
+        modules:
+            enabled:
+                - REST:
+                      depends: PhpBrowser
+                      url: http://books-nginx:8080
+                      shortDebugResponse: 300
+                - PhpBrowser:
+                    url: http://books-nginx:8080
+
+        # add Codeception\Step\Retry trait to AcceptanceTester to enable retries
+        step_decorators:
+            - Codeception\Step\ConditionalAssertion
+            - Codeception\Step\TryTo
+            - Codeception\Step\Retry
+
+extensions:
+    enabled: [Codeception\Extension\RunFailed]
+
+params:
+    - env
+
+gherkin: []
+
+# additional paths
+paths:
+    tests: .
+    output: _output
+    data: Support/Data
+    support: Support
+    envs: _envs
+
+settings:
+    shuffle: false
+    lint: true

@@ -8,12 +8,12 @@ use yii\db\Exception;
 
 class SignUpForm extends Model
 {
-    public string $username;
-    public string $fio;
-    public string $email;
-    public string $password;
-    public string $phone;
-    public int $type;
+    public ?string $username = null;
+    public ?string $fio = null;
+    public ?string $email = null;
+    public ?string $password = null;
+    public ?string $phone = null;
+    public ?int $type = null;
 
 
     public function rules(): array
@@ -35,6 +35,21 @@ class SignUpForm extends Model
             ['type', 'in', 'range' => array_keys(User::getTypes())],
             ['phone', 'string', 'min' => 12, 'max' => 12],
             ['phone', 'match', 'pattern' => '/^\+7\d{10}$/', 'message' => 'Телефон должен быть в формате +79001005050.'],
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'username' => 'Имя пользователя',
+            'email' => 'Электронная почта',
+            'password' => 'Пароль',
+            'fio' => 'ФИО',
+            'phone' => 'Телефон',
+            'type' => 'Тип пользователя',
         ];
     }
 

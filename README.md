@@ -42,6 +42,22 @@ docker exec -it yii2-php vendor/bin/phpstan analyse app
 ~~~
 
 -------------------
+Тесты
+-------------------
+API:
+~~~
+docker exec -it yii2-php vendor/bin/codecept run -c app/modules/Main/tests/codeception.yml
+~~~
+MAIN:
+~~~
+docker exec -it yii2-php vendor/bin/codecept run -c app/modules/Api/tests/codeception.yml
+~~~
+Создайние теста:
+~~~
+docker exec -it yii2-php vendor/bin/codecept generate:cest acceptance FirstTest -c app/modules/Main/tests/codeception.yml
+~~~
+
+-------------------
 TODO
 -------------------
 - тесты
